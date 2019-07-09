@@ -1,0 +1,43 @@
+From 30d3b85e5f691b51e8f983b02ca0caad25c52a14 Mon Sep 17 00:00:00 2001
+From: Pavel Nakonechnyi <zorg@altlinux.org>
+Date: Tue, 9 Jul 2019 21:37:04 +0200
+Subject: [PATCH 6/6] pico-imx8mq: on the first boot expand rootfs partition
+
+This assumes the partition layout as described in  variable.
+---
+ include/configs/pico-imx8mq.h | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/include/configs/pico-imx8mq.h b/include/configs/pico-imx8mq.h
+index d676df3a4b..c87be500de 100644
+--- a/include/configs/pico-imx8mq.h
++++ b/include/configs/pico-imx8mq.h
+@@ -160,7 +160,12 @@
+ 	"mmcroot=/dev/mmcblk0p1 rootwait rw\0"		  \
+ 	"mmcautodetect=yes\0" \
+ 	"mmcargs=setenv bootargs ${jh_clk} console=${console} root=${mmcroot}\0 " \
+-	"UMS=ums 0 mmc ${mmcdev}\0" \
++	"rootfs_start=8MiB\0" \
++	"finduuidrootfs=part uuid mmc 0:1 uuid_gpt_rootfs\0"	\
++	"partitions=uuid_disk=${uuid_gpt_disk};name=rootfs,start=${rootfs_start},size=0,uuid=${uuid_gpt_rootfs}\0" \
++	"part_resized=0\0" \
++	"setup_emmc=run finduuidrootfs;gpt guid mmc 0 uuid_gpt_disk;gpt write mmc 0 $partitions;\0" \
++	"UMS=ums 0 mmc ${mmcdev}\0"				\
+ 	"loadbootscript=ext4load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
+ 	"bootscript=echo Running bootscript from mmc ...; " \
+ 		"source\0" \
+@@ -172,6 +177,11 @@
+ 	"importbootenv=echo Importing environment from mmc ...; " \
+ 		"env import -t -r $loadaddr $filesize\0" \
+ 	"mmcboot=echo Booting from mmc ...; " \
++		"if test ${part_resized} = 0; then " \
++		        "run setup_emmc;" \
++		        "setenv part_resized 1; saveenv;" \
++		        "reset;" \
++		"fi;" \
+ 		"run mmcargs; " \
+ 		"if test ${boot_fdt} = yes || test ${boot_fdt} = try; then " \
+ 			"if run loadfdt; then " \
+-- 
+2.21.0
+
