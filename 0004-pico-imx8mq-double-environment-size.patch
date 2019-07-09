@@ -1,0 +1,25 @@
+From 0e2eb84a305c05ed022b008be621f78f75b4c660 Mon Sep 17 00:00:00 2001
+From: Pavel Nakonechnyi <zorg@altlinux.org>
+Date: Tue, 9 Jul 2019 21:35:06 +0200
+Subject: [PATCH 4/6] pico-imx8mq: double environment size
+
+---
+ include/configs/pico-imx8mq.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/configs/pico-imx8mq.h b/include/configs/pico-imx8mq.h
+index 00dc1a4135..cd23836089 100644
+--- a/include/configs/pico-imx8mq.h
++++ b/include/configs/pico-imx8mq.h
+@@ -106,7 +106,7 @@
+ 
+ #define CONFIG_ENV_OVERWRITE
+ #define CONFIG_ENV_OFFSET               (64 * SZ_64K)
+-#define CONFIG_ENV_SIZE			0x1000
++#define CONFIG_ENV_SIZE			0x2000
+ #define CONFIG_SYS_MMC_ENV_DEV		0   /* USDHC2 */
+ #define CONFIG_MMCROOT			"/dev/mmcblk0p1"  /* USDHC2 */
+ 
+-- 
+2.21.0
+

@@ -1,0 +1,29 @@
+From 51ff7bd5b26dee97236e869fac051ee3dcd19e47 Mon Sep 17 00:00:00 2001
+From: Pavel Nakonechnyi <pavel@gremwell.com>
+Date: Sun, 7 Jul 2019 10:19:12 +0200
+Subject: [PATCH 2/6] pico-imx8mq: do not set mmcblk and mmcroot env variables
+ from board init file
+
+---
+ board/technexion/pico-imx8mq/pico-imx8mq.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/board/technexion/pico-imx8mq/pico-imx8mq.c b/board/technexion/pico-imx8mq/pico-imx8mq.c
+index e58b1c3c3e..063c966fc4 100644
+--- a/board/technexion/pico-imx8mq/pico-imx8mq.c
++++ b/board/technexion/pico-imx8mq/pico-imx8mq.c
+@@ -383,11 +383,6 @@ void board_late_mmc_env_init(void)
+ 
+ 	env_set_ulong("mmcdev", dev_no);
+ 
+-	/* Set mmcblk env */
+-	sprintf(mmcblk, "/dev/mmcblk%dp2 rootwait rw",
+-		mmc_map_to_kernel_blk(dev_no));
+-	env_set("mmcroot", mmcblk);
+-
+ 	sprintf(cmd, "mmc dev %d", dev_no);
+ 	run_command(cmd, 0);
+ }
+-- 
+2.21.0
+
