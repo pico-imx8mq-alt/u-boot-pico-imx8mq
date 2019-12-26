@@ -2,7 +2,7 @@
 
 Name: u-boot-%board
 Version: 2018.03_4.14.98
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot for TechNexion PICO IMX8MQ board
 License: GPL
@@ -14,9 +14,8 @@ Source: %name-%version-%release.tar
 
 Patch1: 0001-pico-imx8mq-perform-FEC-and-its-PHY-configuration-mo.patch
 Patch2: 0002-pico-imx8mq-do-not-set-mmcblk-and-mmcroot-env-variab.patch
-Patch3: 0003-pico-imx8mq-update-boot-settings-to-comply-with-ALT-.patch
-Patch4: 0004-pico-imx8mq-double-environment-size.patch
-Patch5: 0005-pico-imx8mq-enable-gpt-and-part-commands.patch
+Patch3: 0003-pico-imx8mq-set-fdtfile.patch
+Patch5: 0005-pico-imx8mq-enable-gpt-command.patch
 Patch6: 0006-pico-imx8mq-on-the-first-boot-expand-rootfs-partitio.patch
 
 BuildRequires: dtc >= 1.4 flex bc
@@ -31,10 +30,10 @@ This package supports PICO-8M board.
 %prep
 %setup
 
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+
 %patch5 -p1
 %patch6 -p1
 
@@ -52,5 +51,8 @@ install -pm0644 -D arch/arm/dts/imx8mq-pico-pi.dtb %buildroot%_datadir/u-boot/%{
 %_datadir/u-boot/*
 
 %changelog
+* Thu Dec 26 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2018.03_4.14.98-alt2
+- updated to use tn-imx_v2018.03_4.14.98_2.0.0_ga-wip-bootscript upstream branch
+
 * Tue Jul 09 2019 Pavel Nakonechnyi <zorg@altlinux.org> 2018.03_4.14.98-alt1
 - initial build of U-Boot for TechNexion PICO IMX8MQ board

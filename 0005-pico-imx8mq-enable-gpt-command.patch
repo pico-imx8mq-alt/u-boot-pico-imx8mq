@@ -1,0 +1,13 @@
+--- a/include/configs/pico-imx8mq.h
++++ b/include/configs/pico-imx8mq.h
+@@ -259,6 +259,10 @@
+ #define CONFIG_IMX_VIDEO_SKIP
+ #endif
+ 
++#ifndef CONFIG_SPL_BUILD
++#define CONFIG_CMD_GPT
++#endif
++
+ #if defined(CONFIG_ANDROID_SUPPORT)
+ #include "pico-imx8mq_android.h"
+ #elif defined (CONFIG_ANDROID_THINGS_SUPPORT)
