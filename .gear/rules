@@ -1,0 +1,2 @@
+tar: . name=@name@-@version@-@release@ base=@name@-@version@
+copy: *.patch
